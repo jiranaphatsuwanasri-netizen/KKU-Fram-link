@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KKU FARM LINK - แพลตฟอร์มเชื่อมต่อเกษตรกรสู่ร้านอาหารคุณภาพ</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Google Fonts: Prompt -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary-green: #2d7d46;
+            --primary-dark: #1b4d2b;
+            --primary-light: #4caf50;
+            --accent-green: #81c784;
+            --bg-light-green: #f2f9f4;
+            --bg-card: #ffffff;
+            --text-main: #2c3e50;
+            --text-muted: #6c757d;
+        }
+
+        body { 
+            font-family: 'Prompt', sans-serif; 
+            color: var(--text-main); 
+            background-color: #f8faf9; 
+            overflow-x: hidden; 
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: var(--accent-green); border-radius: 4px; }
+
+        /* Navbar Styling */
+        .navbar { 
+            background-color: rgba(255, 255, 255, 0.95); 
+            backdrop-filter: blur(10px); 
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05); 
+        }
+        .navbar-brand { font-weight: 700; color: var(--primary-green) !important; font-size: 1.5rem; }
+        .nav-link { font-weight: 500; color: #4a5568 !important; margin: 0 6px; transition: all 0.3s ease; }
+        .nav-link:hover, .nav-link.active { color: var(--primary-green) !important; }
+        
+        /* Buttons */
+        .btn-custom-primary { 
+            background-color: var(--primary-green); 
+            color: white; 
+            border-radius: 50px; 
+            padding: 8px 24px; 
+            font-weight: 500; 
+            border: none; 
+            transition: all 0.3s ease; 
+        }
+        .btn-custom-primary:hover { 
+            background-color: var(--primary-dark); 
+            color: white; 
+            transform: translateY(-2px); 
+            box-shadow: 0 4px 12px rgba(45, 125, 70, 0.3); 
+        }
+        .btn-custom-outline { 
+            border: 2px solid var(--primary-green); 
+            color: var(--primary-green); 
+            border-radius: 50px; 
+            padding: 8px 24px; 
+            font-weight: 500; 
+            background: transparent; 
+            transition: all 0.3s ease; 
+        }
+        .btn-custom-outline:hover { background-color: var(--primary-green); color: white; }
+
+        /* Hero Section */
+        .hero-section { 
+            background: linear-gradient(135deg, #eef7f1 0%, #d8ebd9 100%); 
+            padding: 90px 0 70px 0; 
+            position: relative; 
+            border-radius: 0 0 40px 40px; 
+        }
+        .hero-title { font-size: 2.8rem; font-weight: 700; line-height: 1.3; color: var(--primary-dark); }
+        .search-box-wrapper { 
+            background: white; 
+            border-radius: 50px; 
+            padding: 6px 10px 6px 20px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08); 
+            border: 1px solid #e2e8f0; 
+        }
+        .search-box-wrapper input { border: none; outline: none; width: 100%; }
+
+        /* General Section Styling */
+        .section-header { text-align: center; margin-bottom: 50px; }
+        .section-badge { 
+            background-color: #e8f5e9; 
+            color: var(--primary-green); 
+            padding: 6px 16px; 
+            border-radius: 30px; 
+            font-size: 0.9rem; 
+            font-weight: 600; 
+            display: inline-block; 
+            margin-bottom: 12px; 
+        }
+        .section-title { font-size: 2.1rem; font-weight: 700; color: var(--primary-dark); }
+
+        /* Cards & Features */
+        .feature-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.04);
+            border: 1px solid #edf2f7;
+            height: 100%;
+            transition: all 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(45, 125, 70, 0.1);
+        }
+
+        .role-card { 
+            background: white; 
+            border-radius: 20px; 
+            padding: 25px; 
+            border: 2px solid transparent; 
+            box-shadow: 0 5px 20px rgba(0,0,0,0.04); 
+            transition: all 0.3s ease; 
+            text-decoration: none; 
+            color: inherit; 
+            display: block; 
+            height: 100%;
+        }
+        .role-card:hover { 
+            border-color: var(--accent-green); 
+            transform: translateY(-5px); 
+            box-shadow: 0 12px 25px rgba(45, 125, 70, 0.12); 
+        }
+        .role-icon { 
+            width: 60px; 
+            height: 60px; 
+            border-radius: 16px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 1.6rem; 
+            margin-bottom: 18px; 
+        }
+        .role-icon.farmer { background-color: #e8f5e9; color: #2e7d32; }
+        .role-icon.restaurant { background-color: #fff3e0; color: #e65100; }
+        .role-icon.logistics { background-color: #e3f2fd; color: #1565c0; }
+
+        /* Comparison Table */
+        .comparison-table { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .comparison-table th { background-color: var(--primary-green); color: white; padding: 18px 20px; font-size: 1.1rem; font-weight: 600; border: none; }
+        .comparison-table td { padding: 16px 20px; vertical-align: middle; border-color: #edf2f7; }
+        .comparison-table tr:hover { background-color: #f8faf8; }
+        .icon-check { color: var(--primary-green); font-size: 1.3rem; }
+        .icon-cross { color: #e53e3e; font-size: 1.2rem; }
+
+        /* Pricing Cards */
+        .package-card { 
+            background: white; 
+            border-radius: 24px; 
+            padding: 35px 28px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
+            border: 2px solid #edf2f7; 
+            transition: all 0.3s ease; 
+            position: relative; 
+            height: 100%; 
+            display: flex; 
+            flex-direction: column; 
+        }
+        .package-card.popular { 
+            border-color: var(--primary-green); 
+            transform: scale(1.03); 
+            box-shadow: 0 15px 35px rgba(45, 125, 70, 0.15); 
+        }
+        .package-card.popular::before { 
+            content: "แนะนำสำหรับร้านค้า/ฟาร์ม"; 
+            position: absolute; 
+            top: -14px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            background: var(--primary-green); 
+            color: white; 
+            padding: 4px 16px; 
+            border-radius: 20px; 
+            font-size: 0.8rem; 
+            font-weight: 600; 
+        }
+        .package-price { font-size: 2.5rem; font-weight: 700; color: var(--primary-dark); }
+        .package-price span { font-size: 1rem; color: var(--text-muted); font-weight: 400; }
+
+        /* Dashboard Architecture */
+        .dashboard-container { 
+            background: #ffffff; 
+            border-radius: 24px; 
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08); 
+            border: 1px solid #e2e8f0; 
+            overflow: hidden; 
+            min-height: 700px;
+        }
+        .dashboard-sidebar { 
+            background-color: #1b4d2b; 
+            color: white; 
+            padding: 25px 15px; 
+            min-height: 100%; 
+        }
+        .dashboard-sidebar .nav-link { 
+            color: #a3d9b1 !important; 
+            border-radius: 12px; 
+            padding: 12px 18px; 
+            margin-bottom: 8px; 
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .dashboard-sidebar .nav-link.active, 
+        .dashboard-sidebar .nav-link:hover { 
+            background: rgba(255, 255, 255, 0.15); 
+            color: white !important; 
+        }
+
+        .stat-card {
+            border-radius: 16px;
+            padding: 20px;
+            background: #ffffff;
+            border: 1px solid #edf2f7;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+        }
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+        }
+
+        .tab-pane-content { display: none; }
+        .tab-pane-content.active { display: block; animation: fadeIn 0.3s ease-in-out; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Footer */
+        footer { background-color: var(--primary-dark); color: #d1e7dd; padding: 60px 0 30px 0; }
+        footer a { color: #a3d9b1; text-decoration: none; transition: all 0.2s; }
+        footer a:hover { color: white; }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="#home">
+                <i class="fa-solid fa-leaf text-success"></i>
+                <span>KKU FARM LINK</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link active" href="#home">หน้าแรก</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#problem">ปัญหาและที่มา</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#users">กลุ่มผู้ใช้งาน</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#comparison">จุดเด่น</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#packages">แพ็กเกจ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#dashboard">ระบบแดชบอร์ด</a></li>
+                </ul>
+                <div class="d-flex gap-2 align-items-center" id="authButtons">
+                    <button class="btn btn-custom-outline" data-bs-toggle="modal" data-bs-target="#loginModal">เข้าสู่ระบบ</button>
+                    <button class="btn btn-custom-primary" data-bs-toggle="modal" data-bs-target="#registerModal">สมัครสมาชิก</button>
+                </div>
+                <!-- แสดงเมื่อ Login แล้ว -->
+                <div class="d-flex gap-2 d-none align-items-center" id="userMenu">
+                    <span class="fw-bold text-success me-2" id="navUserName">ผู้ใช้งานระบบ</span>
+                    <button class="btn btn-sm btn-outline-warning rounded-pill px-3" onclick="resetDemoData()">รีเซ็ตข้อมูล Mock</button>
+                    <button class="btn btn-sm btn-outline-danger rounded-pill px-3" onclick="logout()">ออกจากระบบ</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section id="home" class="hero-section">
+        <div class="container">
+            <div class="row align-items-center gy-4">
+                <div class="col-lg-6">
+                    <span class="section-badge mb-3"><i class="fa-solid fa-sparkles me-1"></i> Smart Agri-Matching Platform</span>
+                    <h1 class="hero-title mb-3">โครงการ KKU FARM LINK: <br><span class="text-success">จับคู่ผลผลิตเกษตรกร</span> กับร้านอาหารคุณภาพ</h1>
+                    <p class="text-secondary lead mb-4">แพลตฟอร์มเชื่อมตรงวัตถุดิบสดใหม่ ปลอดภัย ไร้คนกลาง จากฟาร์มเกษตรกรส่งตรงถึงครัวร้านอาหาร พร้อมระบบจัดการโลจิสติกส์อัจฉริยะ</p>
+                    
+                    <div class="search-box-wrapper d-flex align-items-center mb-4">
+                        <i class="fa-solid fa-magnifying-glass text-muted me-2"></i>
+                        <input type="text" id="searchInput" class="form-control" placeholder="ค้นหาวัตถุดิบ เช่น ผักสลัด Organic, มะเขือเทศ, เมล่อน...">
+                        <button class="btn btn-custom-primary px-4" onclick="handleSearch()">ค้นหา</button>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-3">
+                        <a href="#dashboard" class="btn btn-custom-primary"><i class="fa-solid fa-chart-pie me-2"></i>ดูระบบแดชบอร์ด</a>
+                        <a href="#problem" class="btn btn-custom-outline"><i class="fa-solid fa-circle-info me-2"></i>เรียนรู้เพิ่มเติม</a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="position-relative">
+                        <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=800&q=80" class="img-fluid rounded-4 shadow-lg" alt="Fresh Vegetables Box">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROBLEM SECTION -->
+    <section id="problem" class="py-5">
+        <div class="container py-4">
+            <div class="section-header">
+                <span class="section-badge"><i class="fa-solid fa-triangle-exclamation me-1"></i> ปัญหาและที่มา</span>
+                <h2 class="section-title">ทำไมต้อง KKU FARM LINK?</h2>
+                <p class="text-muted">แก้ปัญหาห่วงโซ่อุปทานการเกษตรแบบเดิมๆ เพื่อสร้างมูลค่าเพิ่มให้กับทุกฝ่าย</p>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="role-icon farmer"><i class="fa-solid fa-wheat-awn-circle-exclamation"></i></div>
+                        <h5 class="fw-bold mb-3">ปัญหาของเกษตรกร</h5>
+                        <ul class="text-secondary ps-3 mb-0 small lh-lg">
+                            <li>ราคาผลผลิตตกต่ำจากการโดนกดราคาโดยคนกลาง</li>
+                            <li>คาดเดาความต้องการของตลาดไม่ได้ ปลูกแล้วขายไม่หมด</li>
+                            <li>ขาดช่องทางการขายเข้าสู่ร้านอาหารโดยตรง</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="role-icon restaurant"><i class="fa-solid fa-store-slash"></i></div>
+                        <h5 class="fw-bold mb-3">ปัญหาของร้านอาหาร</h5>
+                        <ul class="text-secondary ps-3 mb-0 small lh-lg">
+                            <li>ได้วัตถุดิบไม่สดใหม่และราคาสูงผ่านหลายต่อ</li>
+                            <li>ไม่สามารถตรวจสอบแหล่งที่มาและความปลอดภัยได้</li>
+                            <li>ปริมาณวัตถุดิบไม่สม่ำเสมอตามต้องการ</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="role-icon logistics"><i class="fa-solid fa-truck-arrow-right"></i></div>
+                        <h5 class="fw-bold mb-3">ปัญหาด้านการขนส่ง</h5>
+                        <ul class="text-secondary ps-3 mb-0 small lh-lg">
+                            <li>ต้นทุนการขนส่งสูงเมื่อสั่งซื้อปริมาณน้อย</li>
+                            <li>สินค้าเสียหายระหว่างทางเนื่องจากขาดระบบควบคุมอุณหภูมิ</li>
+                            <li>การวางเส้นทางขนส่งไม่มีประสิทธิภาพ</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TARGET USERS SECTION -->
+    <section id="users" class="py-5 bg-light">
+        <div class="container py-4">
+            <div class="section-header">
+                <span class="section-badge"><i class="fa-solid fa-users me-1"></i> กลุ่มผู้ใช้งาน</span>
+                <h2 class="section-title">ใครได้ประโยชน์จากแพลตฟอร์มนี้บ้าง?</h2>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <a href="#" class="role-card">
+                        <div class="role-icon farmer"><i class="fa-solid fa-tractor"></i></div>
+                        <h4 class="fw-bold mb-2">เกษตรกร / ฟาร์ม</h4>
+                        <p class="text-secondary small mb-3">ขายตรง ไม่ผ่านคนกลาง กำหนดราคาที่เป็นธรรม และมีสัญญาล่วงหน้ากับร้านอาหาร</p>
+                        <span class="text-success fw-bold small">ดูรายละเอียด <i class="fa-solid fa-arrow-right ms-1"></i></span>
+                    </a>
+                </div>
+                <div class="col-md-4">
+                    <a href="#" class="role-card">
+                        <div class="role-icon restaurant"><i class="fa-solid fa-utensils"></i></div>
+                        <h4 class="fw-bold mb-2">ร้านอาหาร / โรงแรม</h4>
+                        <p class="text-secondary small mb-3">ได้วัตถุดิบสดใหม่ ปลอดภัย ตรวจสอบย้อนกลับได้ ส่งตรงถึงหน้าครัวทุกวัน</p>
+                        <span class="text-success fw-bold small">ดูรายละเอียด <i class="fa-solid fa-arrow-right ms-1"></i></span>
+                    </a>
+                </div>
+                <div class="col-md-4">
+                    <a href="#" class="role-card">
+                        <div class="role-icon logistics"><i class="fa-solid fa-truck-ramp-box"></i></div>
+                        <h4 class="fw-bold mb-2">ผู้ให้บริการขนส่ง</h4>
+                        <p class="text-secondary small mb-3">รับงานขนส่งรวมสินค้า (Consolidated Freight) เพิ่มรายได้จากเส้นทางประจำ</p>
+                        <span class="text-success fw-bold small">ดูรายละเอียด <i class="fa-solid fa-arrow-right ms-1"></i></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- COMPARISON SECTION -->
+    <section id="comparison" class="py-5">
+        <div class="container py-4">
+            <div class="section-header">
+                <span class="section-badge"><i class="fa-solid fa-code-compare me-1"></i> จุดเด่นและความแตกต่าง</span>
+                <h2 class="section-title">เปรียบเทียบ KKU FARM LINK กับระบบเดิม</h2>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table comparison-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 40%;">คุณลักษณะ (Features)</th>
+                            <th style="width: 30%; text-align: center;">รูปแบบการค้าเดิม</th>
+                            <th style="width: 30%; text-align: center; background-color: var(--primary-dark);">KKU FARM LINK</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>1. การผ่านพ่อค้าคนกลาง</strong></td>
+                            <td class="text-center text-danger">ผ่าน 2-3 ต่อ (ถูกกดราคา)</td>
+                            <td class="text-center fw-bold text-success"><i class="fa-solid fa-circle-check icon-check me-2"></i>จับคู่ตรง 100%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>2. ความสดใหม่ของผลผลิต</strong></td>
+                            <td class="text-center text-muted">ใช้เวลา 2-3 วัน</td>
+                            <td class="text-center fw-bold text-success"><i class="fa-solid fa-circle-check icon-check me-2"></i>ส่งตรงภายใน 24 ชม.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>3. การตรวจสอบแหล่งที่มา (Traceability)</strong></td>
+                            <td class="text-center text-danger"><i class="fa-solid fa-circle-xmark icon-cross"></i> ไม่สามารถตรวจสอบได้</td>
+                            <td class="text-center fw-bold text-success"><i class="fa-solid fa-circle-check icon-check me-2"></i>สแกน QR ดูประวัติฟาร์มได้</td>
+                        </tr>
+                        <tr>
+                            <td><strong>4. การวางแผนการผลิตล่วงหน้า</strong></td>
+                            <td class="text-center text-danger"><i class="fa-solid fa-circle-xmark icon-cross"></i> ปลูกตามดวง/คาดเดา</td>
+                            <td class="text-center fw-bold text-success"><i class="fa-solid fa-circle-check icon-check me-2"></i>มีระบบสั่งซื้อล่วงหน้า (Pre-order)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- PACKAGES SECTION -->
+    <section id="packages" class="py-5 bg-light">
+        <div class="container py-4">
+            <div class="section-header">
+                <span class="section-badge"><i class="fa-solid fa-tags me-1"></i> แพ็กเกจการใช้งาน</span>
+                <h2 class="section-title">เลือกแพ็กเกจที่เหมาะกับคุณ</h2>
+            </div>
+
+            <div class="row g-4 align-items-center">
+                <div class="col-lg-4">
+                    <div class="package-card">
+                        <h4 class="fw-bold">Starter / เกษตรกรย่อย</h4>
+                        <p class="text-muted small">แนะนําสำหรับเกษตรกรเริ่มต้นขายผลผลิต</p>
+                        <div class="package-price mb-4">ฟรี <span>/ ตลอดชีพ</span></div>
+                        <ul class="list-unstyled mb-4 flex-grow-1 lh-lg small">
+                            <li><i class="fa-solid fa-check text-success me-2"></i> ลงรายการสินค้าสูงสุด 7 รายการ</li>
+                            <li><i class="fa-solid fa-check text-success me-2"></i> รับออเดอร์จากร้านอาหารในพื้นที่</li>
+                            <li><i class="fa-solid fa-check text-success me-2"></i> หักค่าธรรมเนียมเพียง 3%</li>
+                        </ul>
+                        <button class="btn btn-custom-outline w-100" data-bs-toggle="modal" data-bs-target="#registerModal">เริ่มใช้งานฟรี</button>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="package-card popular">
+                        <h4 class="fw-bold">Pro Business</h4>
+                        <p class="text-muted small">แนะนำสำหรับร้านอาหาร และฟาร์มขนาดกลาง</p>
+                        <div class="package-price mb-4">฿4,990 <span>/ ปี</span></div>
+                        <ul class="list-unstyled mb-4 flex-grow-1 lh-lg small">
+                            <li><i class="fa-solid fa-check text-success me-2"></i> ลงรายการสินค้าได้ไม่จำกัด</li>
+                            <li><i class="fa-solid fa-check text-success me-2"></i> ระบบสั่งซื้อล่วงหน้า (Pre-order Contract)</li>
+                            <li><i class="fa-solid fa-check text-success me-2"></i> แดชบอร์ดวิเคราะห์ราคาและแนวโน้มตลาด</li>
+                            <li><i class="fa-solid fa-check text-success me-2"></i> เว้นค่าธรรมเนียมการจับคู่</li>
+                        </ul>
+                        <button class="btn btn-custom-primary w-100" data-bs-toggle="modal" data-bs-target="#registerModal">สมัครแพ็กเกจนี้</button>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="package-card">
+                        <h4 class="fw-bold">Enterprise</h4>
+                        <p class="text-muted small">แนะนำสำหรับโรงแรม เครือร้านอาหาร และกลุ่มสหกรณ์</p>
+                        <div class="package-price mb-4">฿9,990 <span>/ ปี</span></div>
+                        <ul class="list-unstyled mb-4 flex-grow-1 lh-lg small">
+                            <li><i class="fa-solid fa-check text-success me-2"></i> ทุกฟีเจอร์ใน Pro Business</li>
+                            <li><i class="fa-solid fa-check text-success me-2"></i> ระบบจัดการโลจิสติกส์ส่วนตัว</li>
+                            <li><i class="fa-solid fa-check text-success me-2"></i> มีผู้ดูแลส่วนตัว (Account Manager)</li>
+                        </ul>
+                        <button class="btn btn-custom-outline w-100" data-bs-toggle="modal" data-bs-target="#registerModal">ติดต่อเรา</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FULL INTERACTIVE DASHBOARD SECTION -->
+    <section id="dashboard" class="py-5">
+        <div class="container py-4">
+            <div class="section-header">
+                <span class="section-badge"><i class="fa-solid fa-desktop me-1"></i> ระบบแดชบอร์ดอัจฉริยะ</span>
+                <h2 class="section-title">ระบบบริหารจัดการและปฏิบัติการหลังบ้าน</h2>
+                <p class="text-muted">ระบบทดลองจัดการผลผลิต จับคู่ซื้อขาย การจัดส่ง และการเงิน เชื่อมต่อ LocalStorage แบบ Real-time</p>
+            </div>
+
+            <div class="dashboard-container">
+                <div class="row g-0">
+                    
+                    <!-- SIDEBAR MENU -->
+                    <div class="col-md-3 col-lg-2 dashboard-sidebar">
+                        <div class="d-flex align-items-center gap-2 mb-4 px-2">
+                            <i class="fa-solid fa-gauge-high text-success fs-4"></i>
+                            <span class="fw-bold fs-5">เมนูปฏิบัติการ</span>
+                        </div>
+                        <div class="nav flex-column nav-pills" role="tablist">
+                            <a class="nav-link active" onclick="switchTab('overview', event)">
+                                <i class="fa-solid fa-chart-line me-2"></i>ภาพรวม
+                            </a>
+                            <a class="nav-link" onclick="switchTab('products', event)">
+                                <i class="fa-solid fa-boxes-stacked me-2"></i>รายการผลผลิต
+                            </a>
+                            <a class="nav-link" onclick="switchTab('matching', event)">
+                                <i class="fa-solid fa-handshake me-2"></i>จับคู่ซื้อขาย
+                            </a>
+                            <a class="nav-link" onclick="switchTab('tracking', event)">
+                                <i class="fa-solid fa-truck-fast me-2"></i>ติดตามการส่ง
+                            </a>
+                            <a class="nav-link" onclick="switchTab('finance', event)">
+                                <i class="fa-solid fa-wallet me-2"></i>การเงิน
+                            </a>
+                            <a class="nav-link" onclick="switchTab('settings', event)">
+                                <i class="fa-solid fa-gear me-2"></i>ตั้งค่า
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- MAIN CONTENT PANEL -->
+                    <div class="col-md-9 col-lg-10 p-4 bg-white">
+                        
+                        <!-- HEADER BAR -->
+                        <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom">
+                            <div>
+                                <h4 class="fw-bold mb-1" id="currentTabTitle">ภาพรวมระบบ (Overview)</h4>
+                                <small class="text-muted">ยินดีต้อนรับ: <span id="dashboardUserName" class="text-success fw-bold">ผู้ใช้งานระบบ</span> | อัปเดตล่าสุด: <span id="currentTime"></span></small>
+                            </div>
+                            <span class="badge bg-success-subtle text-success px-3 py-2 rounded-pill fs-6 border border-success-subtle">
+                                <i class="fa-solid fa-circle text-success me-1 fs-6"></i> สถานะ: ออนไลน์
+                            </span>
+                        </div>
+
+                        <!-- 1. TAB: ภาพรวม (OVERVIEW) -->
+                        <div id="tab-overview" class="tab-pane-content active">
+                            <div class="row g-3 mb-4">
+                                <div class="col-md-3">
+                                    <div class="stat-card">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <small class="text-muted d-block">ยอดขายรวม</small>
+                                                <h4 class="fw-bold mb-0 text-success" id="statRevenue">฿0</h4>
+                                            </div>
+                                            <div class="stat-icon bg-success-subtle text-success"><i class="fa-solid fa-baht-sign"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="stat-card">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <small class="text-muted d-block">คำสั่งซื้อทั้งหมด</small>
+                                                <h4 class="fw-bold mb-0 text-primary" id="statOrdersCount">0</h4>
+                                            </div>
+                                            <div class="stat-icon bg-primary-subtle text-primary"><i class="fa-solid fa-cart-shopping"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="stat-card">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <small class="text-muted d-block">ผลผลิตในระบบ</small>
+                                                <h4 class="fw-bold mb-0 text-warning" id="statProductsCount">0</h4>
+                                            </div>
+                                            <div class="stat-icon bg-warning-subtle text-warning"><i class="fa-solid fa-seedling"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="stat-card">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <small class="text-muted d-block">จัดส่งสำเร็จแล้ว</small>
+                                                <h4 class="fw-bold mb-0 text-info" id="statDeliveredCount">0</h4>
+                                            </div>
+                                            <div class="stat-icon bg-info-subtle text-info"><i class="fa-solid fa-circle-check"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row g-4">
+                                <div class="col-lg-8">
+                                    <div class="p-3 border rounded-4 bg-white shadow-sm">
+                                        <h6 class="fw-bold mb-3"><i class="fa-solid fa-chart-column text-success me-2"></i>แนวโน้มยอดคำสั่งซื้อรายเดือน</h6>
+                                        <canvas id="salesChart" height="140"></canvas>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="p-3 border rounded-4 bg-white shadow-sm h-100">
+                                        <h6 class="fw-bold mb-3"><i class="fa-solid fa-pie-chart text-success me-2"></i>สัดส่วนสถานะการจัดส่ง</h6>
+                                        <canvas id="statusChart" height="200"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2. TAB: รายการผลผลิต (PRODUCTS) -->
+                        <div id="tab-products" class="tab-pane-content">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h6 class="fw-bold mb-0"><i class="fa-solid fa-wheat-awn text-success me-2"></i>คลังสินค้าและวัตถุดิบทางการเกษตร</h6>
+                                <button class="btn btn-custom-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addProductModal">+ เพิ่มผลผลิตใหม่</button>
+                            </div>
+                            <div class="table-responsive border rounded-3">
+                                <table class="table table-hover align-middle mb-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>รหัสสินค้า</th>
+                                            <th>ชื่อผลผลิต</th>
+                                            <th>หมวดหมู่</th>
+                                            <th>ราคา / หน่วย</th>
+                                            <th>คงเหลือในสต็อก</th>
+                                            <th>การจัดการ</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="productsTableBody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- 3. TAB: จับคู่ซื้อขาย (MATCHING) -->
+                        <div id="tab-matching" class="tab-pane-content">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h6 class="fw-bold mb-0"><i class="fa-solid fa-handshake text-success me-2"></i>รายการจับคู่คำสั่งซื้อระหว่างเกษตรกรกับร้านอาหาร</h6>
+                                <button class="btn btn-custom-primary btn-sm" onclick="addNewMatchingOrder()">+ จำลองสร้างดีลจับคู่</button>
+                            </div>
+                            <div class="table-responsive border rounded-3">
+                                <table class="table table-hover align-middle mb-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>รหัสดีล</th>
+                                            <th>ผู้ขาย (ฟาร์ม)</th>
+                                            <th>ผู้ซื้อ (ร้านอาหาร)</th>
+                                            <th>สินค้า</th>
+                                            <th>มูลค่า (บาท)</th>
+                                            <th>สถานะการตอบรับ</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="matchingTableBody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- 4. TAB: ติดตามการส่ง (TRACKING) -->
+                        <div id="tab-tracking" class="tab-pane-content">
+                            <div class="mb-3">
+                                <h6 class="fw-bold mb-0"><i class="fa-solid fa-truck-ramp-box text-success me-2"></i>ระบบติดตามสถานะการขนส่งสินค้า (Real-time Logistics)</h6>
+                            </div>
+                            <div class="table-responsive border rounded-3">
+                                <table class="table table-hover align-middle mb-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>รหัสขนส่ง</th>
+                                            <th>รายการออเดอร์</th>
+                                            <th>ผู้ขนส่ง</th>
+                                            <th>ปลายทาง</th>
+                                            <th>สถานะปัจจุบัน</th>
+                                            <th>อัปเดตสถานะ</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="trackingTableBody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- 5. TAB: การเงิน (FINANCE) -->
+                        <div id="tab-finance" class="tab-pane-content">
+                            <div class="row g-3 mb-4">
+                                <div class="col-md-4">
+                                    <div class="p-3 bg-light-green border border-success rounded-4">
+                                        <small class="text-muted">รายได้สุทธิที่โอนแล้ว</small>
+                                        <h3 class="fw-bold text-success mb-0" id="finPaidAmount">฿0</h3>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="p-3 bg-warning-subtle border border-warning rounded-4">
+                                        <small class="text-muted">ยอดรอการโอน (Pending)</small>
+                                        <h3 class="fw-bold text-warning mb-0" id="finPendingAmount">฿0</h3>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="p-3 bg-primary-subtle border border-primary rounded-4">
+                                        <small class="text-muted">ค่าธรรมเนียมแพลตฟอร์ม (3%)</small>
+                                        <h3 class="fw-bold text-primary mb-0" id="finFeeAmount">฿0</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <h6 class="fw-bold mb-3"><i class="fa-solid fa-receipt text-success me-2"></i>ประวัติการทำธุรกรรมทางการเงิน</h6>
+                            <div class="table-responsive border rounded-3">
+                                <table class="table table-hover align-middle mb-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>รหัสรายการ</th>
+                                            <th>วันที่/เวลา</th>
+                                            <th>คำอธิบาย</th>
+                                            <th>ประเภท</th>
+                                            <th>จำนวนเงิน</th>
+                                            <th>สถานะการชำระ</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="financeTableBody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- 6. TAB: ตั้งค่า (SETTINGS) -->
+                        <div id="tab-settings" class="tab-pane-content">
+                            <div class="row justify-content-center">
+                                <div class="col-md-8">
+                                    <div class="p-4 border rounded-4 bg-white">
+                                        <h6 class="fw-bold mb-4"><i class="fa-solid fa-sliders text-success me-2"></i>ตั้งค่าบัญชีและโปรไฟล์ร้านค้า/ฟาร์ม</h6>
+                                        <form id="settingsForm" onsubmit="saveSettings(event)">
+                                            <div class="mb-3">
+                                                <label class="form-label font-weight-bold">ชื่อฟาร์ม / ร้านอาหาร</label>
+                                                <input type="text" class="form-control" id="settingName" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">อีเมลติดต่อ</label>
+                                                <input type="email" class="form-control" id="settingEmail" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">เบอร์โทรศัพท์</label>
+                                                <input type="text" class="form-control" id="settingPhone" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">ที่อยู่หลัก / สถานที่จัดส่ง</label>
+                                                <textarea class="form-control" id="settingAddress" rows="3" required></textarea>
+                                            </div>
+                                            <div class="mb-3 form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="settingNoti" checked>
+                                                <label class="form-check-label" for="settingNoti">เปิดรับแจ้งเตือนเมื่อมีคำสั่งซื้อใหม่ผ่าน Line Notify</label>
+                                            </div>
+                                            <button type="submit" class="btn btn-custom-primary w-100">บันทึกการตั้งค่า</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="row gy-4 mb-4">
+                <div class="col-lg-4">
+                    <h5 class="fw-bold text-white mb-3"><i class="fa-solid fa-leaf text-success me-2"></i>KKU FARM LINK</h5>
+                    <p class="small text-white-50">แพลตฟอร์มเชื่อมตรงผลผลิตเกษตรกรสู่ร้านอาหารคุณภาพ ขอนแก่นและภาคตะวันออกเฉียงเหนือ</p>
+                </div>
+                <div class="col-lg-2 col-6">
+                    <h6 class="fw-bold text-white mb-3">เมนูลัด</h6>
+                    <ul class="list-unstyled small">
+                        <li class="mb-2"><a href="#home">หน้าแรก</a></li>
+                        <li class="mb-2"><a href="#problem">ปัญหาและที่มา</a></li>
+                        <li class="mb-2"><a href="#users">กลุ่มผู้ใช้งาน</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-6">
+                    <h6 class="fw-bold text-white mb-3">ข้อมูลเพิ่มเติม</h6>
+                    <ul class="list-unstyled small">
+                        <li class="mb-2"><a href="#comparison">จุดเด่น</a></li>
+                        <li class="mb-2"><a href="#packages">แพ็กเกจ</a></li>
+                        <li class="mb-2"><a href="#dashboard">แดชบอร์ด</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h6 class="fw-bold text-white mb-3">ติดต่อโครงการ</h6>
+                    <p class="small mb-1"><i class="fa-solid fa-location-dot me-2"></i>มหาวิทยาลัยขอนแก่น ถ.มิตรภาพ อ.เมือง จ.ขอนแก่น</p>
+                    <p class="small mb-1"><i class="fa-solid fa-envelope me-2"></i>contact@kkufarmlink.com</p>
+                </div>
+            </div>
+            <hr class="border-secondary">
+            <div class="text-center small text-white-50 pt-2">
+                © 2026 KKU FARM LINK Project. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL สมัครสมาชิก -->
+    <div class="modal fade" id="registerModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title"><i class="fa-solid fa-user-plus me-2"></i>สมัครสมาชิก KKU FARM LINK</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="registerForm">
+                        <div class="mb-3">
+                            <label class="form-label">ชื่อ - นามสกุล / ชื่อฟาร์มหรือร้านค้า</label>
+                            <input type="text" class="form-control" id="regName" placeholder="เช่น ฟาร์มผักยิ้มสดใส" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">ประเภทผู้ใช้งาน</label>
+                            <select class="form-select" id="regRole">
+                                <option value="farmer">เกษตรกร / ฟาร์ม</option>
+                                <option value="restaurant">ร้านอาหาร / โรงแรม</option>
+                                <option value="logistics">ผู้ให้บริการขนส่ง</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">อีเมล</label>
+                            <input type="email" class="form-control" id="regEmail" placeholder="name@example.com" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">รหัสผ่าน</label>
+                            <input type="password" class="form-control" id="regPassword" required>
+                        </div>
+                        <button type="submit" class="btn btn-custom-primary w-100">ยืนยันสมัครสมาชิก</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL เข้าสู่ระบบ -->
+    <div class="modal fade" id="loginModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-success fw-bold"><i class="fa-solid fa-right-to-bracket me-2"></i>เข้าสู่ระบบ</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="loginForm">
+                        <div class="mb-3">
+                            <label class="form-label">อีเมล</label>
+                            <input type="email" class="form-control" id="loginEmail" value="admin@kkufarm.com" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">รหัสผ่าน</label>
+                            <input type="password" class="form-control" id="loginPassword" value="123456" required>
+                        </div>
+                        <button type="submit" class="btn btn-custom-primary w-100">เข้าสู่ระบบ</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: ADD PRODUCT -->
+    <div class="modal fade" id="addProductModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title"><i class="fa-solid fa-plus me-2"></i>เพิ่มรายการผลผลิตทางการเกษตร</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addProductForm" onsubmit="handleCreateProduct(event)">
+                        <div class="mb-3">
+                            <label class="form-label">ชื่อผลผลิต</label>
+                            <input type="text" class="form-control" id="prodName" placeholder="เช่น ผักสลัดคอส Organic" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">หมวดหมู่</label>
+                            <select class="form-select" id="prodCategory">
+                                <option value="ผักสด">ผักสด Organic</option>
+                                <option value="ผลไม้">ผลไม้ตามฤดูกาล</option>
+                                <option value="สมุนไพร">สมุนไพร/เครื่องเทศ</option>
+                                <option value="ปศุสัตว์/ประมง">เนื้อสัตว์/ไข่สด</option>
+                            </select>
+                        </div>
+                        <div class="row g-2 mb-3">
+                            <div class="col-6">
+                                <label class="form-label">ราคาต่อหน่วย (บาท)</label>
+                                <input type="number" class="form-control" id="prodPrice" placeholder="120" required>
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label">ปริมาณในสต็อก</label>
+                                <input type="number" class="form-control" id="prodStock" placeholder="50" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-custom-primary w-100">เพิ่มรายการสินค้า</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- INTEGRATED JAVASCRIPT ENGINE -->
+    <script>
+        // ==========================================
+        // 1. MOCK BACKEND INITIAL DATABASE DATA
+        // ==========================================
+        const initialProducts = [
+            { id: "PROD-001", name: "ผักคอส Organic", category: "ผักสด", price: 120, stock: 80 },
+            { id: "PROD-002", name: "มะเขือเทศเชอร์รี่", category: "ผักสด", price: 95, stock: 45 },
+            { id: "PROD-003", name: "เมล่อนญี่ปุ่นพันธุ์หวาน", category: "ผลไม้", price: 250, stock: 20 },
+            { id: "PROD-004", name: "ไข่ไก่อารมณ์ดี (แพ็ค 10 ฟอง)", category: "ปศุสัตว์/ประมง", price: 65, stock: 100 }
+        ];
+
+        const initialOrders = [
+            { id: "MATCH-801", seller: "ฟาร์มผักยิ้มขอนแก่น", buyer: "ร้าน Smile Kitchen", product: "ผักคอส Organic", amount: 6000, status: "ตกลงสัญญาแล้ว" },
+            { id: "MATCH-802", seller: "สวนผลไม้ลุงมี", buyer: "โรงแรมกรีนโฮเทล", product: "เมล่อนญี่ปุ่นพันธุ์หวาน", amount: 5000, status: "กำลังเจรจา" },
+            { id: "MATCH-803", seller: "ฟาร์มผักยิ้มขอนแก่น", buyer: "ร้านสลัดสุขภาพ มข.", product: "มะเขือเทศเชอร์รี่", amount: 2850, status: "ตกลงสัญญาแล้ว" }
+        ];
+
+        const initialTracking = [
+            { id: "TRK-901", orderId: "MATCH-801", carrier: "KKU Express", destination: "ร้าน Smile Kitchen", status: "จัดส่งสำเร็จ" },
+            { id: "TRK-902", orderId: "MATCH-803", carrier: "เกษตรขนส่ง", destination: "ร้านสลัดสุขภาพ มข.", status: "กำลังขนส่ง" }
+        ];
+
+        const initialFinance = [
+            { id: "TX-101", datetime: "2026-03-01 10:30", desc: "ชำระเงินค่าผักคอส (MATCH-801)", type: "รับเงิน", amount: 6000, status: "สำเร็จ" },
+            { id: "TX-102", datetime: "2026-03-02 14:15", desc: "ชำระเงินค่ามะเขือเทศ (MATCH-803)", type: "รับเงิน", amount: 2850, status: "รอโอนเงิน" }
+        ];
+
+        const initialSettings = {
+            name: "ศูนย์การเรียนรู้เกษตรกรขอนแก่น (KKU Demo)",
+            email: "contact@kkufarmdemo.com",
+            phone: "081-234-5678",
+            address: "123 หมู่ 16 ต.ในเมือง อ.เมือง จ.ขอนแก่น 40002",
+            noti: true
+        };
+
+        // Initialize Database into LocalStorage
+        function initBackendDatabase() {
+            if (!localStorage.getItem('backend_products')) localStorage.setItem('backend_products', JSON.stringify(initialProducts));
+            if (!localStorage.getItem('backend_orders')) localStorage.setItem('backend_orders', JSON.stringify(initialOrders));
+            if (!localStorage.getItem('backend_tracking')) localStorage.setItem('backend_tracking', JSON.stringify(initialTracking));
+            if (!localStorage.getItem('backend_finance')) localStorage.setItem('backend_finance', JSON.stringify(initialFinance));
+            if (!localStorage.getItem('backend_settings')) localStorage.setItem('backend_settings', JSON.stringify(initialSettings));
+        }
+
+        function resetDemoData() {
+            localStorage.clear();
+            initBackendDatabase();
+            location.reload();
+        }
+
+        // Charts Global Instance
+        let salesChartInstance = null;
+        let statusChartInstance = null;
+
+        // ==========================================
+        // 2. DASHBOARD NAVIGATION & TAB SWITCHING
+        // ==========================================
+        function switchTab(tabName, event) {
+            if (event) event.preventDefault();
+
+            // Update Menu Highlights
+            document.querySelectorAll('.dashboard-sidebar .nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            if (event && event.currentTarget) {
+                event.currentTarget.classList.add('active');
+            }
+
+            // Hide all tab panes
+            document.querySelectorAll('.tab-pane-content').forEach(pane => {
+                pane.classList.remove('active');
+            });
+
+            // Show selected tab pane
+            const activePane = document.getElementById('tab-' + tabName);
+            if (activePane) activePane.classList.add('active');
+
+            // Update Header Title
+            const titles = {
+                'overview': 'ภาพรวมระบบ (Overview)',
+                'products': 'รายการผลผลิต (Products Management)',
+                'matching': 'ระบบจับคู่ซื้อขาย (Smart Matching)',
+                'tracking': 'ติดตามการจัดส่ง (Logistics Tracking)',
+                'finance': 'บัญชีและการเงิน (Financial Overview)',
+                'settings': 'ตั้งค่าระบบ (System Settings)'
+            };
+            document.getElementById('currentTabTitle').innerText = titles[tabName];
+
+            renderAllTabs();
+        }
+
+        // ==========================================
+        // 3. DASHBOARD TAB RENDERING FUNCTIONS
+        // ==========================================
+        function renderAllTabs() {
+            renderOverviewTab();
+            renderProductsTab();
+            renderMatchingTab();
+            renderTrackingTab();
+            renderFinanceTab();
+            renderSettingsTab();
+        }
+
+        // Render Overview
+        function renderOverviewTab() {
+            const products = JSON.parse(localStorage.getItem('backend_products')) || [];
+            const orders = JSON.parse(localStorage.getItem('backend_orders')) || [];
+            const tracking = JSON.parse(localStorage.getItem('backend_tracking')) || [];
+            const finance = JSON.parse(localStorage.getItem('backend_finance')) || [];
+
+            const totalRev = finance.reduce((acc, curr) => curr.status === 'สำเร็จ' ? acc + curr.amount : acc, 0);
+            const delivered = tracking.filter(t => t.status === 'จัดส่งสำเร็จ').length;
+
+            document.getElementById('statRevenue').innerText = '฿' + totalRev.toLocaleString();
+            document.getElementById('statOrdersCount').innerText = orders.length;
+            document.getElementById('statProductsCount').innerText = products.length;
+            document.getElementById('statDeliveredCount').innerText = delivered;
+
+            renderCharts(delivered, tracking.length - delivered);
+        }
+
+        function renderCharts(deliveredCount, pendingCount) {
+            const ctx1 = document.getElementById('salesChart');
+            const ctx2 = document.getElementById('statusChart');
+            if (!ctx1 || !ctx2) return;
+
+            if (salesChartInstance) salesChartInstance.destroy();
+            if (statusChartInstance) statusChartInstance.destroy();
+
+            salesChartInstance = new Chart(ctx1.getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.'],
+                    datasets: [{
+                        label: 'ยอดขาย (บาท)',
+                        data: [4500, 7200, 8850, 6100, 9500, 12000],
+                        backgroundColor: '#4caf50'
+                    }]
+                },
+                options: { responsive: true, plugins: { legend: { display: false } } }
+            });
+
+            statusChartInstance = new Chart(ctx2.getContext('2d'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['จัดส่งสำเร็จ', 'อยู่ระหว่างส่ง'],
+                    datasets: [{
+                        data: [deliveredCount, pendingCount],
+                        backgroundColor: ['#2d7d46', '#ffc107']
+                    }]
+                },
+                options: { responsive: true }
+            });
+        }
+
+        // Render Products Tab
+        function renderProductsTab() {
+            const products = JSON.parse(localStorage.getItem('backend_products')) || [];
+            const tbody = document.getElementById('productsTableBody');
+            tbody.innerHTML = '';
+
+            products.forEach(p => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="fw-bold text-muted">${p.id}</td>
+                    <td class="fw-bold">${p.name}</td>
+                    <td><span class="badge bg-light text-dark border">${p.category}</span></td>
+                    <td>฿${p.price.toLocaleString()}</td>
+                    <td>${p.stock} หน่วย</td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-danger" onclick="deleteProduct('${p.id}')">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function handleCreateProduct(e) {
+            e.preventDefault();
+            const products = JSON.parse(localStorage.getItem('backend_products')) || [];
+            const newProd = {
+                id: "PROD-00" + (products.length + 1),
+                name: document.getElementById('prodName').value,
+                category: document.getElementById('prodCategory').value,
+                price: parseFloat(document.getElementById('prodPrice').value),
+                stock: parseInt(document.getElementById('prodStock').value)
+            };
+            products.push(newProd);
+            localStorage.setItem('backend_products', JSON.stringify(products));
+
+            const modal = bootstrap.Modal.getInstance(document.getElementById('addProductModal'));
+            modal.hide();
+            document.getElementById('addProductForm').reset();
+            renderAllTabs();
+        }
+
+        function deleteProduct(id) {
+            let products = JSON.parse(localStorage.getItem('backend_products')) || [];
+            products = products.filter(p => p.id !== id);
+            localStorage.setItem('backend_products', JSON.stringify(products));
+            renderAllTabs();
+        }
+
+        // Render Matching Tab
+        function renderMatchingTab() {
+            const orders = JSON.parse(localStorage.getItem('backend_orders')) || [];
+            const tbody = document.getElementById('matchingTableBody');
+            tbody.innerHTML = '';
+
+            orders.forEach(o => {
+                const tr = document.createElement('tr');
+                const badgeClass = o.status === 'ตกลงสัญญาแล้ว' ? 'bg-success' : 'bg-warning text-dark';
+                tr.innerHTML = `
+                    <td class="fw-bold text-muted">${o.id}</td>
+                    <td>${o.seller}</td>
+                    <td class="fw-bold">${o.buyer}</td>
+                    <td>${o.product}</td>
+                    <td class="fw-bold text-success">฿${o.amount.toLocaleString()}</td>
+                    <td><span class="badge ${badgeClass}">${o.status}</span></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function addNewMatchingOrder() {
+            const orders = JSON.parse(localStorage.getItem('backend_orders')) || [];
+            const newOrder = {
+                id: "MATCH-" + Math.floor(800 + Math.random() * 100),
+                seller: "ฟาร์มผักยิ้มขอนแก่น",
+                buyer: "ร้านอาหารบ้านสวน",
+                product: "ผักสลัดไฮโดรโปนิกส์",
+                amount: Math.floor(20 + Math.random() * 30) * 100,
+                status: "ตกลงสัญญาแล้ว"
+            };
+            orders.unshift(newOrder);
+            localStorage.setItem('backend_orders', JSON.stringify(orders));
+
+            // Sync with Finance & Tracking
+            const finance = JSON.parse(localStorage.getItem('backend_finance')) || [];
+            finance.unshift({
+                id: "TX-" + Math.floor(100 + Math.random() * 900),
+                datetime: new Date().toISOString().slice(0, 16).replace('T', ' '),
+                desc: `ชำระเงินค่าสินค้า (${newOrder.id})`,
+                type: "รับเงิน",
+                amount: newOrder.amount,
+                status: "สำเร็จ"
+            });
+            localStorage.setItem('backend_finance', JSON.stringify(finance));
+
+            renderAllTabs();
+        }
+
+        // Render Tracking Tab
+        function renderTrackingTab() {
+            const tracking = JSON.parse(localStorage.getItem('backend_tracking')) || [];
+            const tbody = document.getElementById('trackingTableBody');
+            tbody.innerHTML = '';
+
+            tracking.forEach(t => {
+                const tr = document.createElement('tr');
+                const badgeClass = t.status === 'จัดส่งสำเร็จ' ? 'bg-success' : 'bg-info text-dark';
+                tr.innerHTML = `
+                    <td class="fw-bold text-muted">${t.id}</td>
+                    <td>${t.orderId}</td>
+                    <td>${t.carrier}</td>
+                    <td>${t.destination}</td>
+                    <td><span class="badge ${badgeClass}">${t.status}</span></td>
+                    <td>
+                        ${t.status !== 'จัดส่งสำเร็จ' 
+                            ? `<button class="btn btn-sm btn-outline-success" onclick="updateTrackingStatus('${t.id}')">ทำรายการส่งสำเร็จ</button>` 
+                            : `<i class="fa-solid fa-check-double text-success"></i>`}
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function updateTrackingStatus(id) {
+            const tracking = JSON.parse(localStorage.getItem('backend_tracking')) || [];
+            const item = tracking.find(t => t.id === id);
+            if (item) {
+                item.status = 'จัดส่งสำเร็จ';
+                localStorage.setItem('backend_tracking', JSON.stringify(tracking));
+                renderAllTabs();
+            }
+        }
+
+        // Render Finance Tab
+        function renderFinanceTab() {
+            const finance = JSON.parse(localStorage.getItem('backend_finance')) || [];
+            const tbody = document.getElementById('financeTableBody');
+            tbody.innerHTML = '';
+
+            let paid = 0;
+            let pending = 0;
+
+            finance.forEach(f => {
+                if (f.status === 'สำเร็จ') paid += f.amount;
+                else pending += f.amount;
+
+                const tr = document.createElement('tr');
+                const badgeClass = f.status === 'สำเร็จ' ? 'bg-success' : 'bg-warning text-dark';
+                tr.innerHTML = `
+                    <td class="fw-bold text-muted">${f.id}</td>
+                    <td>${f.datetime}</td>
+                    <td>${f.desc}</td>
+                    <td><span class="badge bg-light text-success border border-success">${f.type}</span></td>
+                    <td class="fw-bold">฿${f.amount.toLocaleString()}</td>
+                    <td><span class="badge ${badgeClass}">${f.status}</span></td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            document.getElementById('finPaidAmount').innerText = '฿' + paid.toLocaleString();
+            document.getElementById('finPendingAmount').innerText = '฿' + pending.toLocaleString();
+            document.getElementById('finFeeAmount').innerText = '฿' + (paid * 0.03).toLocaleString();
+        }
+
+        // Render Settings Tab
+        function renderSettingsTab() {
+            const settings = JSON.parse(localStorage.getItem('backend_settings'));
+            if (settings) {
+                document.getElementById('settingName').value = settings.name;
+                document.getElementById('settingEmail').value = settings.email;
+                document.getElementById('settingPhone').value = settings.phone;
+                document.getElementById('settingAddress').value = settings.address;
+                document.getElementById('settingNoti').checked = settings.noti;
+                
+                if(!localStorage.getItem('kku_user')) {
+                    document.getElementById('navUserName').innerText = settings.name;
+                    document.getElementById('dashboardUserName').innerText = settings.name;
+                }
+            }
+        }
+
+        function saveSettings(e) {
+            e.preventDefault();
+            const updatedSettings = {
+                name: document.getElementById('settingName').value,
+                email: document.getElementById('settingEmail').value,
+                phone: document.getElementById('settingPhone').value,
+                address: document.getElementById('settingAddress').value,
+                noti: document.getElementById('settingNoti').checked
+            };
+            localStorage.setItem('backend_settings', JSON.stringify(updatedSettings));
+            alert('✅ บันทึกข้อมูลการตั้งค่าเรียบร้อยแล้ว');
+            renderAllTabs();
+        }
+
+        // ==========================================
+        // 4. AUTHENTICATION & SEARCH UTILS
+        // ==========================================
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('regName').value;
+            localStorage.setItem('kku_user', name);
+            checkLoginStatus();
+            
+            const modal = bootstrap.Modal.getInstance(document.getElementById('registerModal'));
+            modal.hide();
+            alert("สมัครสมาชิกสำเร็จ! ยินดีต้อนรับ " + name);
+        });
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            localStorage.setItem('kku_user', 'แอดมินฟาร์มลิงก์ (Demo)');
+            checkLoginStatus();
+            
+            const modal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
+            modal.hide();
+            alert("เข้าสู่ระบบสำเร็จ!");
+        });
+
+        function checkLoginStatus() {
+            const user = localStorage.getItem('kku_user');
+            if (user) {
+                document.getElementById('authButtons').classList.add('d-none');
+                document.getElementById('userMenu').classList.remove('d-none');
+                document.getElementById('navUserName').innerText = user;
+                document.getElementById('dashboardUserName').innerText = user;
+            } else {
+                document.getElementById('authButtons').classList.remove('d-none');
+                document.getElementById('userMenu').classList.add('d-none');
+                
+                const settings = JSON.parse(localStorage.getItem('backend_settings'));
+                const defaultName = settings ? settings.name : "ผู้ใช้งานระบบ";
+                document.getElementById('dashboardUserName').innerText = defaultName;
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('kku_user');
+            checkLoginStatus();
+            alert("ออกจากระบบเรียบร้อยแล้ว");
+        }
+
+        function handleSearch() {
+            const val = document.getElementById('searchInput').value;
+            if (val.trim() === "") {
+                alert("กรุณากรอกชื่อวัตถุดิบที่ต้องการค้นหา");
+            } else {
+                alert("กำลังค้นหาวัตถุดิบ: " + val);
+            }
+        }
+
+        // Clock Update
+        setInterval(() => {
+            const now = new Date();
+            const clockElem = document.getElementById('currentTime');
+            if(clockElem) clockElem.innerText = now.toLocaleString('th-TH');
+        }, 1000);
+
+        // INITIALIZE APPLICATION
+        document.addEventListener('DOMContentLoaded', () => {
+            initBackendDatabase();
+            checkLoginStatus();
+            renderAllTabs();
+        });
+    </script>
+</body>
+</html>
